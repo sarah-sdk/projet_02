@@ -1,47 +1,33 @@
-import { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import useOlympicsData from "../hooks/useOlympicsData";
+import type { Country } from "../models/Country";
+import type { Participation } from "../models/Participation";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
-  // Anti-pattern 3 — Utilisation de `any` — typer pour garder les bénéfices TypeScript.
-  const [data, setData] = useState<any>(null);
-
-  // Anti-pattern 4 — useEffect avec logique lourde dans le composant — idéalement : custom hook ou librairie de fetching de données (ex. react-query).
-  // De plus en mode développement, le "strict mode" de React est activé, ce qui va éxecuter ce code 2
-  // Pour aller plus loin : https://react.dev/learn/you-might-not-need-an-effect
-  useEffect(() => {
-    // Anti-pattern 5 — console.log à retirer.
-    console.log("Loading data...");
-    setTimeout(() => {
-      setData(olympicsData);
-      // Anti-pattern 5 — console.log à retirer.
-      console.log("Data loaded:", olympicsData);
-    }, 500);
-  }, []);
 
   // Anti-pattern 6 — Logique métier complexe directement dans le composant
-  const calculateTotalMedals = (country: any) => {
+  const calculateTotalMedals = (country: Country) => {
     return country.participations.reduce(
-      (sum: any, p: any) => sum + p.medalsCount,
+      (sum: number, p: Participation) => sum + p.medalsCount,
       0,
     );
   };
 
-  const totalParticipatingCountries = data ? data.length : 0;
+  const totalParticipatingCountries = olympicsData ? olympicsData.length : 0;
   const totalGamesEditions = 5;
 
   // Anti-pattern 7 — État de chargement dérivé des données au lieu d'un état dédié (loading/error).
-  if (!data) {
+  if (!olympicsData) {
     return <div>Chargement...</div>;
   }
 
   const chartData = {
-    labels: data.map((d: any) => d.name),
+    labels: olympicsData.map((d: Country) => d.name),
     datasets: [
       {
         label: "Total des médailles",
-        data: data.map((d: any) => calculateTotalMedals(d)),
+        data: olympicsData.map((d: Country) => calculateTotalMedals(d)),
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",

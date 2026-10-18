@@ -1,6 +1,8 @@
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
 import useOlympicsData from "../hooks/useOlympicsData";
+import type { Country } from "../models/Country";
+import type { Participation } from "../models/Participation";
 
 export default function Country() {
   const olympicsData = useOlympicsData();
@@ -9,28 +11,34 @@ export default function Country() {
   // Anti-pattern 5 — console.log à retirer.
   console.log("Loading country with id:", id);
   // Anti-pattern 3 — Utilisation de `any` pour l'état ne permettant pas de bénéficier de TypeScript.
-  const country: any = olympicsData.find((c: any) => c.id === Number(id));
+  const country: Country | undefined = olympicsData.find(
+    (c: Country) => c.id === Number(id),
+  );
+
+  if (!country) {
+    return <div>Pays introuvable</div>;
+  }
 
   // Anti-pattern 5 — console.log à retirer.
   console.log("Country loaded:", country);
 
   const totalMedals = country.participations.reduce(
-    (sum: any, p: any) => sum + p.medalsCount,
+    (sum: number, p: Participation) => sum + p.medalsCount,
     0,
   );
   const totalAthletes = country.participations.reduce(
-    (sum: any, p: any) => sum + p.athleteCount,
+    (sum: number, p: Participation) => sum + p.athleteCount,
     0,
   );
   const totalParticipations = country.participations.length;
 
   // Anti-pattern 10 — Préparation des données du graphique dans le composant — extraire dans une fonction ou un hook pour séparer UI et logique. https://react.dev/learn/thinking-in-react
   const evolutionData = {
-    labels: country.participations.map((p: any) => p.year.toString()),
+    labels: country.participations.map((p: Participation) => p.year.toString()),
     datasets: [
       {
         label: "Nombre de médailles",
-        data: country.participations.map((p: any) => p.medalsCount),
+        data: country.participations.map((p: Participation) => p.medalsCount),
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         tension: 0.3,
