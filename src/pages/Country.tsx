@@ -1,7 +1,9 @@
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
+import useOlympicsData from "../hooks/useOlympicsData";
 
-export default function Country({ olympicsData }) {
+export default function Country() {
+  const olympicsData = useOlympicsData();
   const { id } = useParams();
 
   // Anti-pattern 5 — console.log à retirer.

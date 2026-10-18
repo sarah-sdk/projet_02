@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
+import useOlympicsData from "../hooks/useOlympicsData";
 
-export default function Home({ olympicsData }) {
+export default function Home() {
+  const olympicsData = useOlympicsData();
   // Anti-pattern 3 — Utilisation de `any` — typer pour garder les bénéfices TypeScript.
   const [data, setData] = useState<any>(null);
 
