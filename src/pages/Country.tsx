@@ -2,7 +2,7 @@ import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
 import type { Country } from "../models/Country";
 import type { Participation } from "../models/Participation";
-import useCountry from "../hooks/useCountry";
+import { useCountry } from "../hooks/useCountry";
 
 export default function Country() {
   const { id } = useParams();

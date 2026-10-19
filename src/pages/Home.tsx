@@ -1,7 +1,7 @@
 import { Pie } from "react-chartjs-2";
-import useOlympicsData from "../hooks/useOlympicsData";
 import type { Country } from "../models/Country";
 import type { Participation } from "../models/Participation";
+import { useOlympicsData } from "../hooks/useOlympicsData";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
