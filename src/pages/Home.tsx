@@ -3,6 +3,7 @@ import type { Country } from "../models/Country";
 import { useOlympicsData } from "../hooks/useOlympicsData";
 import { calculateTotalMedals } from "../utils/calculateTotalMedals";
 import { calculateTotalGamesEditions } from "../utils/calculateTotalGamesEditions";
+import StatCard from "../components/StatCard";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
@@ -67,20 +68,17 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Anti-pattern 8 — Cartes dupliquées — extraire en composant réutilisable (Indicator.tsx). */}
         <div className="mb-2">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center mb-2">
-            <h3 className="text-xl font-semibold mb-2">Pays participants</h3>
-            <p className="text-4xl font-bold text-blue-400">
-              {totalParticipatingCountries}
-            </p>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-            <h3 className="text-xl font-semibold mb-2">Éditions des JO</h3>
-            <p className="text-4xl font-bold text-green-400">
-              {totalGamesEditions}
-            </p>
-          </div>
+          <StatCard
+            title="Pays participants"
+            stat={totalParticipatingCountries}
+            color="blue"
+          />
+          <StatCard
+            title="Éditions des JO"
+            stat={totalGamesEditions}
+            color="green"
+          />
         </div>
 
         <div className="bg-gray-800 p-8 rounded-lg shadow-xl">
