@@ -2,12 +2,13 @@ import { Pie } from "react-chartjs-2";
 import type { Country } from "../models/Country";
 import { useOlympicsData } from "../hooks/useOlympicsData";
 import { calculateTotalMedals } from "../utils/calculateTotalMedals";
+import { calculateTotalGamesEditions } from "../utils/calculateTotalGamesEditions";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
 
   const totalParticipatingCountries = olympicsData ? olympicsData.length : 0;
-  const totalGamesEditions = 5;
+  const totalGamesEditions = calculateTotalGamesEditions(olympicsData);
 
   // Anti-pattern 7 — État de chargement dérivé des données au lieu d'un état dédié (loading/error).
   if (!olympicsData) {
