@@ -73,6 +73,8 @@ src/
 ├── hooks/      # Accès aux données et logique réutilisable
 │   ├── useOlympicsData.ts
 │   └── useCountry.ts
+├── utils/      # Fonctions utilitaires et calculs métier
+│   └── calculateTotalMedals.ts
 ├── models/      # Types
 │   └── Country.ts
 └── data/      # Réponses simulées du back-end
