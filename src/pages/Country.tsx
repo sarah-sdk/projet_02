@@ -1,19 +1,16 @@
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
-import useOlympicsData from "../hooks/useOlympicsData";
 import type { Country } from "../models/Country";
 import type { Participation } from "../models/Participation";
+import useCountry from "../hooks/useCountry";
 
 export default function Country() {
-  const olympicsData = useOlympicsData();
   const { id } = useParams();
+  const country = useCountry(id);
 
   // Anti-pattern 5 — console.log à retirer.
   console.log("Loading country with id:", id);
   // Anti-pattern 3 — Utilisation de `any` pour l'état ne permettant pas de bénéficier de TypeScript.
-  const country: Country | undefined = olympicsData.find(
-    (c: Country) => c.id === Number(id),
-  );
 
   if (!country) {
     return <div>Pays introuvable</div>;
