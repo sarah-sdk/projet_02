@@ -1,18 +1,10 @@
 import { Pie } from "react-chartjs-2";
 import type { Country } from "../models/Country";
-import type { Participation } from "../models/Participation";
 import { useOlympicsData } from "../hooks/useOlympicsData";
+import { calculateTotalMedals } from "../utils/calculateTotalMedals";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
-
-  // Anti-pattern 6 — Logique métier complexe directement dans le composant
-  const calculateTotalMedals = (country: Country) => {
-    return country.participations.reduce(
-      (sum: number, p: Participation) => sum + p.medalsCount,
-      0,
-    );
-  };
 
   const totalParticipatingCountries = olympicsData ? olympicsData.length : 0;
   const totalGamesEditions = 5;
