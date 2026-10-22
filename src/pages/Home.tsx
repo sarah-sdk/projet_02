@@ -1,30 +1,9 @@
-import { Pie } from "react-chartjs-2";
 import { useOlympicsData } from "../hooks/useOlympicsData";
-import { calculateTotalGamesEditions } from "../utils/calculateTotalGamesEditions";
-import StatCard from "../components/StatCard";
-import { buildMedalsDistributionChart } from "../utils/buildMedalsDistributionChart";
-import { useNavigate } from "react-router-dom";
-import type { ActiveElement, ChartEvent } from "chart.js";
+import MedalChart from "../components/MedalChart";
+import GeneralStatCards from "../components/GeneralStatCards";
 
 export default function Home() {
-  const navigate = useNavigate();
   const olympicsData = useOlympicsData();
-
-  const totalParticipatingCountries = olympicsData.length;
-  const totalGamesEditions = calculateTotalGamesEditions(olympicsData);
-
-  const handleChartClick = (_event: ChartEvent, elements: ActiveElement[]) => {
-    if (elements.length === 0) return;
-
-    const country = olympicsData[elements[0].index];
-
-    if (country) {
-      navigate(`/country/${country.id}`);
-    }
-  };
-
-  const { chartData, chartOptions } =
-    buildMedalsDistributionChart(olympicsData);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -40,32 +19,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="mb-2">
-          <StatCard
-            title="Pays participants"
-            stat={totalParticipatingCountries}
-            color="blue"
-            textAlign="text-center"
-          />
-          <StatCard
-            title="Éditions des JO"
-            stat={totalGamesEditions}
-            color="green"
-            textAlign="text-center"
-          />
-        </div>
-
-        <div className="bg-gray-800 p-8 rounded-lg shadow-xl">
-          <div style={{ height: "400px" }}>
-            <Pie
-              data={chartData}
-              options={{
-                ...chartOptions,
-                onClick: handleChartClick,
-              }}
-            />
-          </div>
-        </div>
+        <GeneralStatCards olympicsData={olympicsData} />
+        <MedalChart olympicsData={olympicsData} />
 
         <div className="text-sm text-gray-400">
           <p>Cliquez sur un pays pour voir ses détails</p>
