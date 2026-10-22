@@ -1,58 +1,17 @@
 import { Pie } from "react-chartjs-2";
-import type { Country } from "../models/Country";
 import { useOlympicsData } from "../hooks/useOlympicsData";
-import { calculateTotalMedals } from "../utils/calculateTotalMedals";
 import { calculateTotalGamesEditions } from "../utils/calculateTotalGamesEditions";
 import StatCard from "../components/StatCard";
+import { buildMedalsDistributionChart } from "../utils/buildMedalsDistributionChart";
 
 export default function Home() {
   const olympicsData = useOlympicsData();
 
-  const totalParticipatingCountries = olympicsData ? olympicsData.length : 0;
+  const totalParticipatingCountries = olympicsData.length;
   const totalGamesEditions = calculateTotalGamesEditions(olympicsData);
 
-  // Anti-pattern 7 — État de chargement dérivé des données au lieu d'un état dédié (loading/error).
-  if (!olympicsData) {
-    return <div>Chargement...</div>;
-  }
-
-  const chartData = {
-    labels: olympicsData.map((d: Country) => d.name),
-    datasets: [
-      {
-        label: "Total des médailles",
-        data: olympicsData.map((d: Country) => calculateTotalMedals(d)),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.6)",
-          "rgba(54, 162, 235, 0.6)",
-          "rgba(255, 206, 86, 0.6)",
-          "rgba(75, 192, 192, 0.6)",
-          "rgba(153, 102, 255, 0.6)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "bottom" as const,
-        labels: {
-          color: "white",
-        },
-      },
-    },
-  };
+  const { chartData, chartOptions } =
+    buildMedalsDistributionChart(olympicsData);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
