@@ -9,7 +9,7 @@ import {
   LineElement,
   PointElement,
 } from "chart.js";
-import AppRouter from "./app/router";
+import AppRouter from "./router";
 
 ChartJS.register(
   ArcElement,
