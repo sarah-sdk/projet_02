@@ -8,16 +8,9 @@ export default function Country() {
   const { id } = useParams();
   const country = useCountry(id);
 
-  // Anti-pattern 5 — console.log à retirer.
-  console.log("Loading country with id:", id);
-  // Anti-pattern 3 — Utilisation de `any` pour l'état ne permettant pas de bénéficier de TypeScript.
-
   if (!country) {
     return <div>Pays introuvable</div>;
   }
-
-  // Anti-pattern 5 — console.log à retirer.
-  console.log("Country loaded:", country);
 
   const totalMedals = country.participations.reduce(
     (sum: number, p: Participation) => sum + p.medalsCount,
