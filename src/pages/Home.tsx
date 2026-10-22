@@ -3,12 +3,25 @@ import { useOlympicsData } from "../hooks/useOlympicsData";
 import { calculateTotalGamesEditions } from "../utils/calculateTotalGamesEditions";
 import StatCard from "../components/StatCard";
 import { buildMedalsDistributionChart } from "../utils/buildMedalsDistributionChart";
+import { useNavigate } from "react-router-dom";
+import type { ActiveElement, ChartEvent } from "chart.js";
 
 export default function Home() {
+  const navigate = useNavigate();
   const olympicsData = useOlympicsData();
 
   const totalParticipatingCountries = olympicsData.length;
   const totalGamesEditions = calculateTotalGamesEditions(olympicsData);
+
+  const handleChartClick = (_event: ChartEvent, elements: ActiveElement[]) => {
+    if (elements.length === 0) return;
+
+    const country = olympicsData[elements[0].index];
+
+    if (country) {
+      navigate(`/country/${country.id}`);
+    }
+  };
 
   const { chartData, chartOptions } =
     buildMedalsDistributionChart(olympicsData);
@@ -44,7 +57,13 @@ export default function Home() {
 
         <div className="bg-gray-800 p-8 rounded-lg shadow-xl">
           <div style={{ height: "400px" }}>
-            <Pie data={chartData} options={chartOptions} />
+            <Pie
+              data={chartData}
+              options={{
+                ...chartOptions,
+                onClick: handleChartClick,
+              }}
+            />
           </div>
         </div>
 
