@@ -3,7 +3,11 @@ import MedalChart from "../components/MedalChart";
 import GeneralStatCards from "../components/GeneralStatCards";
 
 export default function Home() {
-  const olympicsData = useOlympicsData();
+  const { data, isLoading } = useOlympicsData();
+
+  if (isLoading) {
+    return <div>Chargement...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -19,8 +23,8 @@ export default function Home() {
           </p>
         </div>
 
-        <GeneralStatCards olympicsData={olympicsData} />
-        <MedalChart olympicsData={olympicsData} />
+        <GeneralStatCards olympicsData={data} />
+        <MedalChart olympicsData={data} />
 
         <div className="text-sm text-gray-400">
           <p>Cliquez sur un pays pour voir ses détails</p>

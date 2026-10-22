@@ -1,12 +1,15 @@
 import type { Country } from "../models/Country";
 import { useOlympicsData } from "./useOlympicsData";
 
-function useCountry(id: string | undefined): Country | undefined {
-  const olympicsData = useOlympicsData();
+function useCountry(id: string | undefined): {
+  country: Country | undefined;
+  isLoading: boolean;
+} {
+  const { data, isLoading } = useOlympicsData();
 
-  const country = olympicsData.find((c: Country) => c.id === Number(id));
+  const country = data.find((c: Country) => c.id === Number(id));
 
-  return country;
+  return { country, isLoading };
 }
 
 export { useCountry };

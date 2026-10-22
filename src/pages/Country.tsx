@@ -7,7 +7,11 @@ import CountryCards from "../components/CountryCards";
 export default function Country() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const country = useCountry(id);
+  const { country, isLoading } = useCountry(id);
+
+  if (isLoading) {
+    return <div>Chargement...</div>;
+  }
 
   if (!country) {
     return <div>Pays introuvable</div>;
