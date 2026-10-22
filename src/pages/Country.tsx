@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import type { Country } from "../models/Country";
 import type { Participation } from "../models/Participation";
 import { useCountry } from "../hooks/useCountry";
+import StatCard from "../components/StatCard";
 
 export default function Country() {
   const { id } = useParams();
@@ -72,22 +73,25 @@ export default function Country() {
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold mb-8">{country.name}</h1>
 
-        {/* Anti-pattern 8 — Cartes dupliquées avec Home — extraire en composant réutilisable (Indicator.tsx). */}
         <div className="mb-2">
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-2">
-            <h3 className="text-xl font-semibold mb-2">Participations</h3>
-            <p className="text-4xl font-bold text-blue-400">
-              {totalParticipations}
-            </p>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg mb-2">
-            <h3 className="text-xl font-semibold mb-2">Total médailles</h3>
-            <p className="text-4xl font-bold text-yellow-400">{totalMedals}</p>
-          </div>
-          <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-2">Total athlètes</h3>
-            <p className="text-4xl font-bold text-green-400">{totalAthletes}</p>
-          </div>
+          <StatCard
+            title="Participations"
+            stat={totalParticipations}
+            color="blue"
+            textAlign={null}
+          />
+          <StatCard
+            title="Total médailles"
+            stat={totalMedals}
+            color="yellow"
+            textAlign={null}
+          />
+          <StatCard
+            title="Total athlètes"
+            stat={totalAthletes}
+            color="green"
+            textAlign={null}
+          />
         </div>
 
         <div className="bg-gray-800 p-8 rounded-lg shadow-xl">

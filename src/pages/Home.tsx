@@ -73,11 +73,13 @@ export default function Home() {
             title="Pays participants"
             stat={totalParticipatingCountries}
             color="blue"
+            textAlign="text-center"
           />
           <StatCard
             title="Éditions des JO"
             stat={totalGamesEditions}
             color="green"
+            textAlign="text-center"
           />
         </div>
 
