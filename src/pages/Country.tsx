@@ -4,6 +4,9 @@ import type { Country } from "../models/Country";
 import type { Participation } from "../models/Participation";
 import { useCountry } from "../hooks/useCountry";
 import StatCard from "../components/StatCard";
+import { calculateTotalMedals } from "../utils/calculateTotalMedals";
+import { calculateTotalParticipations } from "../utils/calculateTotalParticipations";
+import { calculateTotalAthletes } from "../utils/calculateTotalAthletes";
 
 export default function Country() {
   const { id } = useParams();
@@ -13,15 +16,9 @@ export default function Country() {
     return <div>Pays introuvable</div>;
   }
 
-  const totalMedals = country.participations.reduce(
-    (sum: number, p: Participation) => sum + p.medalsCount,
-    0,
-  );
-  const totalAthletes = country.participations.reduce(
-    (sum: number, p: Participation) => sum + p.athleteCount,
-    0,
-  );
-  const totalParticipations = country.participations.length;
+  const totalMedals = calculateTotalMedals(country);
+  const totalAthletes = calculateTotalAthletes(country);
+  const totalParticipations = calculateTotalParticipations(country);
 
   // Anti-pattern 10 — Préparation des données du graphique dans le composant — extraire dans une fonction ou un hook pour séparer UI et logique. https://react.dev/learn/thinking-in-react
   const evolutionData = {
