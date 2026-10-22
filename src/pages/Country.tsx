@@ -1,12 +1,12 @@
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
 import type { Country } from "../models/Country";
-import type { Participation } from "../models/Participation";
 import { useCountry } from "../hooks/useCountry";
 import StatCard from "../components/StatCard";
 import { calculateTotalMedals } from "../utils/calculateTotalMedals";
 import { calculateTotalParticipations } from "../utils/calculateTotalParticipations";
 import { calculateTotalAthletes } from "../utils/calculateTotalAthletes";
+import { buildCountryEvolutionChart } from "../utils/buildCountryEvolutionChart";
 
 export default function Country() {
   const { id } = useParams();
@@ -20,50 +20,8 @@ export default function Country() {
   const totalAthletes = calculateTotalAthletes(country);
   const totalParticipations = calculateTotalParticipations(country);
 
-  // Anti-pattern 10 — Préparation des données du graphique dans le composant — extraire dans une fonction ou un hook pour séparer UI et logique. https://react.dev/learn/thinking-in-react
-  const evolutionData = {
-    labels: country.participations.map((p: Participation) => p.year.toString()),
-    datasets: [
-      {
-        label: "Nombre de médailles",
-        data: country.participations.map((p: Participation) => p.medalsCount),
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        tension: 0.3,
-      },
-    ],
-  };
-
-  const evolutionOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: "top" as const,
-        labels: {
-          color: "white",
-        },
-      },
-    },
-    scales: {
-      y: {
-        ticks: {
-          color: "white",
-        },
-        grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
-      },
-      x: {
-        ticks: {
-          color: "white",
-        },
-        grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
-      },
-    },
-  };
+  const { evolutionData, evolutionOptions } =
+    buildCountryEvolutionChart(country);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
