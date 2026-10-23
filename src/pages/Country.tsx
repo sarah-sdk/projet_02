@@ -3,6 +3,7 @@ import type { Country } from "../models/Country";
 import { useCountry } from "../hooks/useCountry";
 import CountryChart from "../components/CountryChart";
 import CountryCards from "../components/CountryCards";
+import NotFound from "./NotFound";
 
 export default function Country() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export default function Country() {
   }
 
   if (!country) {
-    return <div>Pays introuvable</div>;
+    return <NotFound />;
   }
 
   return (
