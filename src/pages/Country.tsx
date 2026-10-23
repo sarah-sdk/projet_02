@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import type { Country } from "../models/Country";
 import { useCountry } from "../hooks/useCountry";
 import CountryChart from "../components/CountryChart";
@@ -25,8 +25,7 @@ export default function Country() {
           onClick={() => navigate("/")}
           className="mb-6 inline-flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          <span aria-hidden="true">←</span>
-          Retour à l’accueil
+          <Link to="/">← Retour</Link>
         </button>
         <h1 className="text-4xl font-bold mb-8">{country.name}</h1>
         <CountryCards country={country} />
