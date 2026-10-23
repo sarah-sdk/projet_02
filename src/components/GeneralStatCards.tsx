@@ -11,7 +11,7 @@ export default function GeneralStatCards({
   const totalGamesEditions = calculateTotalGamesEditions(olympicsData);
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 md:grid grid-cols-2 gap-4">
       <StatCard
         title="Pays participants"
         stat={totalParticipatingCountries}

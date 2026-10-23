@@ -10,7 +10,7 @@ export default function CountryCards({ country }: { country: Country }) {
   const totalParticipations = calculateTotalParticipations(country);
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 md:grid grid-cols-3 gap-4">
       <StatCard
         title="Participations"
         stat={totalParticipations}
