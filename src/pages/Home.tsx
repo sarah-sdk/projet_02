@@ -1,9 +1,9 @@
-import { useOlympicsData } from "../hooks/useOlympicsData";
+import { useData } from "../hooks/useData";
 import MedalChart from "../components/MedalChart";
 import GeneralStatCards from "../components/GeneralStatCards";
 
 export default function Home() {
-  const { data, isLoading } = useOlympicsData();
+  const { data, isLoading } = useData();
 
   if (isLoading) {
     return <div>Chargement...</div>;

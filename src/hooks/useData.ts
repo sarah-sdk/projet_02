@@ -2,7 +2,7 @@ import { useState } from "react";
 import olympicsData from "../data/olympics.json";
 import type { Country } from "../models/Country";
 
-function useOlympicsData(): {
+function useData(): {
   data: Country[];
   isLoading: boolean;
 } {
@@ -12,4 +12,4 @@ function useOlympicsData(): {
   return { data, isLoading };
 }
 
-export { useOlympicsData };
+export { useData };

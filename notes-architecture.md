@@ -71,7 +71,7 @@ src/
 │   ├── Home.tsx
 │   └── Country.tsx
 ├── hooks/      # Accès aux données et logique réutilisable
-│   ├── useOlympicsData.ts
+│   ├── useData.ts
 │   └── useCountry.ts
 ├── utils/      # Fonctions utilitaires et calculs métier
 │   └── calculateTotalMedals.ts

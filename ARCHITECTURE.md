@@ -23,7 +23,7 @@ Le code source est organisé de la manière suivante :
   - `Home.tsx` : présente le tableau de bord général.
   - `Country.tsx` : présente les statistiques détaillées d'un pays.
 - **`hooks/`** : hooks personnalisés pour l'accès aux données.
-  - `useOlympicsData.ts` : fournit les données olympiques et l'état de chargement.
+  - `useData.ts` : fournit les données olympiques et l'état de chargement.
   - `useCountry.ts` : recherche un pays à partir de son identifiant et expose son état de chargement.
 - **`data/`** : contient les données locales dans `olympics.json`.
 - **`models/`** : contient les interfaces TypeScript décrivant les données, notamment `Country.ts` et `Participation.ts`.
@@ -51,7 +51,7 @@ Ils reçoivent les données nécessaires via leurs props. Cette séparation favo
 
 ## 4. Gestion des données avec les hooks personnalisés
 
-### `useOlympicsData`
+### `useData`
 
 Ce hook centralise l'accès aux données olympiques provenant actuellement du fichier local `olympics.json`. Il expose les données ainsi qu'un indicateur de chargement `isLoading`.
 
@@ -59,7 +59,7 @@ Les pages peuvent ainsi afficher un état de chargement avant de présenter leur
 
 ### `useCountry`
 
-Ce hook réutilise `useOlympicsData` pour rechercher un pays à partir de son identifiant. Il retourne le pays correspondant, lorsqu'il existe, ainsi que l'état de chargement.
+Ce hook réutilise `useData` pour rechercher un pays à partir de son identifiant. Il retourne le pays correspondant, lorsqu'il existe, ainsi que l'état de chargement.
 
 La page `Country` peut ainsi distinguer le chargement des données d'un pays introuvable.
 
@@ -71,7 +71,7 @@ Cette séparation rend la navigation plus lisible et facilite l'ajout de nouvell
 
 ## 6. Préparation à une future API back-end
 
-Les données sont actuellement fournies par un fichier JSON local. Leur accès étant centralisé dans `useOlympicsData`, la source pourra évoluer vers une API sans obliger les pages à connaître les détails des requêtes HTTP.
+Les données sont actuellement fournies par un fichier JSON local. Leur accès étant centralisé dans `useData`, la source pourra évoluer vers une API sans obliger les pages à connaître les détails des requêtes HTTP.
 
 Lors du passage à une API, le hook pourra gérer les appels asynchrones, les états de chargement et les erreurs. Les pages et les composants pourront continuer à consommer les données selon un contrat similaire, sous réserve des adaptations nécessaires au nouveau format de réponse.
 
